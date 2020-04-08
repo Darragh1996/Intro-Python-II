@@ -4,7 +4,7 @@ from item import Item
 
 # Declare all the rooms
 
-press = Item('Press', 'A large press with two doors and two drawers'),
+press = Item('Press', 'A large press with two doors and two drawers')
 bed = Item('Bed', 'A single bed in the corner of the room')
 clothes_bin = Item(
     'Clothes Bin', 'A clothes bin half filled with dirty clothes sits tight to the wall')
@@ -61,6 +61,7 @@ print("""
     You wake up in your bed and reach for your phone to check the latest updates on Slack.\n
     You discover your phone isn't where you left it.\n
     OBJECTIVE: FIND YOUR PHONE\n
+    *** type 'help' for hints ***\n
     """)
 user_input = ""
 while user_input != 'q':
@@ -70,9 +71,26 @@ while user_input != 'q':
     user_input = input("\nwhat would you like to do?: ")
     actions = user_input.split()
     if len(actions) == 1:
-        if user_input == 's':
-            Tom.move_player(Tom.loc.s_to)
+        try:
+            if actions[0] == 'help':
+                print(
+                    """Type 'n', 's', 'e', or 'w' to move north, south, east, or west respectively.\n """)
+            if actions[0] == 's':
+                Tom.move_player(Tom.loc.s_to)
+            elif actions[0] == 'w':
+                Tom.move_player(Tom.loc.w_to)
+            elif actions[0] == 'n':
+                Tom.move_player(Tom.loc.n_to)
+            elif actions[0] == 'e':
+                Tom.move_player(Tom.loc.e_to)
+        except:
+            print("Unable to do that")
+    elif len(actions) > 1:
+        if actions[0] == 'get':
+            for i in Tom.loc.items:
+                print(i)
+                if actions[1] == i.__repr__():
+                    Tom.take_item(i)
+                    Tom.loc.remove_item(i)
         else:
-            print("Not a valid input!")
-    else:
-        print("more than one")
+            print("failed")

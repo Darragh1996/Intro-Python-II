@@ -12,3 +12,6 @@ class Player:
 
     def move_player(self, new_loc):
         self.loc = new_loc
+
+    def take_item(self, item):
+        self.items.append(item)
